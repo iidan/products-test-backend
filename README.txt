@@ -1,4 +1,4 @@
-//I can config the tests to run auto on load, but it was not in the requirements do I set it manually
+//I can config the tests to run auto on load, but it was not in the requirements, so I set it manually
 
 
 run the command :
