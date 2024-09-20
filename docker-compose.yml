@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  app:
+    image: papi
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "9095:9095"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/products?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 12345
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: products
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  frontend:
+    build:
+      context: ./angular
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+
+volumes:
+  mysql_data:
